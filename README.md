@@ -4,7 +4,7 @@ In order to use geolocation, you will need to add a field to the content you wan
 
 Once this plugin is installed, you can add the portlet to a layout and try elasticsearch queries against the dotCMS content store.  
 
-## Viewtool:
+## Viewtool
 ```
 #set($results = $estool.search('{
     "query": {
