@@ -1,0 +1,11 @@
+<?xml version="1.0"?>
+
+<portlet-app>
+
+	<portlet>
+		<portlet-name>ES_SEARCH_PORTLET</portlet-name>
+		<display-name>ES Query Tool</display-name>
+		<portlet-class>com.dotcms.plugin.es.rest.ESContentResourcePortlet</portlet-class>
+	</portlet>
+
+</portlet-app>
