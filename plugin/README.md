@@ -1,33 +1,238 @@
-plugin-dotcms-email 
-=====================
+This plugin for dotCMS 3.0 exposes native elasticsearch content queries via a viewtool, a java api, a portlet and as a restful service.  It allows you access to geolocation queries, facets, suggestions ("Did you mean?" and other OTB functionality.
 
-This plugin provides a Workflow Actionlet that can be used to send arbitrary emails to a user or users.  Coupling this plugin with some of the more advanced workflow features and you can build automated responders, timed responses and even user triggers automatic follow up emails that are customized to the data you have collected in the form submittal
+In order to use geolocation, you will need to add a field to the content you want to query with the velocity var name "latlon".
 
-Every field in the email can contain velocity and can access the submitted content.  So, to send a custom email to the email address stored in a field called userEmail, put $content.userEmail in the 'to email' field and the system will replace it with the variables from the content  
+Once this plugin is installed, you can add the portlet to a layout and try elasticsearch queries against the dotCMS content store.  
 
-The attachment field can work 2 ways.  You can pass it a path, such as "/images/logo.png" and it will include the file on that path, or you can pass it the velocity variable for a field on the submitted content - this will attach the associated content to the email.
+Viewtool:
+```
+#set($results = $estool.search('{
+    "query": {
+        "bool": {
+            "must": {
+                "term": {
+                    "title": "gas"
+                }
+            },
+            "must_not": {
+                "range": {
+                    "languageid": {
+                        "from": 2,
+                        "to": 20
+                    }
+                }
+            }
+        }
+    }
+}'
+))
 
-This was written for Dotcms 2.5 
-
-Please make sure the following entries are in your OSGI exported packages file
+#foreach($con in $results)
+  $con.title<br>
+#end
+<hr>
+$results.response<br>
 
 ```
-com.dotmarketing.portlets.workflows.actionlet,
-org.apache.velocity.context,
-com.dotmarketing.beans,
-com.dotmarketing.business,
-com.dotmarketing.cmis.proxy,
-com.dotmarketing.portlets.contentlet.model,
-com.dotmarketing.portlets.workflows.actionlet,
-com.dotmarketing.portlets.workflows.model,
-com.dotmarketing.util,
-com.dotmarketing.osgi,
-com.liferay.portal.util,
-com.dotmarketing.portlets.contentlet.business,
-org.apache.felix.http.api.ExtHttpService,
-org.apache.felix.http.api,
-com.dotmarketing.portlets.structure.model,
-javax.mail.internet,
-com.dotmarketing.portlets.fileassets.business,
 
+RESTful
+```
+// curl for   results
+curl -XGET http://localhost:8080/api/es/search -d '{
+    "query": {
+        "bool": {
+            "must": {
+                "term": {
+                    "_all": "gas"
+                }
+            }
+        }
+    }
+}'
+
+// curl for facets
+curl -XGET http://localhost:8080/api/es/raw -d '
+	{
+	    "query" : { "query_string" : {"query" : "gas*"} },
+	    "facets" : {
+	        "tags" : { "terms" : {"field" : "news.tags"} }
+	    }
+	}
+'
+
+
+// curl for suggestions (Did you mean?)
+curl -XGET http://localhost:8080/api/es/raw -d '
+	{
+	  "suggest" : {
+	    "title-suggestions" : {
+	      "text" : "gs pric rollrcoater",
+	      "term" : {
+	        "size" : 3,
+	        "field" : "title"
+	      }
+	    }
+	  }
+	}
+'
+
+```
+
+
+
+
+
+
+
+
+
+Queries (use the portlet to get results)
+
+```
+//Match All
+{
+    "query" : {
+        "match_all" : {}
+    }
+}
+
+
+// Match gas
+{
+    "query": {
+        "bool": {
+            "must": {
+                "term": {
+                    "_all": "gas"
+                }
+            }
+        }
+    }
+}
+
+
+// facet on the news.tags field
+{
+    "query" : { "query_string" : {"query" : "gas*"} },
+    "facets" : {
+        "tags" : { "terms" : {"field" : "news.tags"} }
+    }
+}
+
+
+
+
+
+
+
+
+// suggest based on title
+{
+  "suggest" : {
+    "title-suggestions" : {
+      "text" : "gs pric rollrcoater",
+      "term" : {
+        "size" : 3,
+        "field" : "title"
+      }
+    }
+  }
+}
+
+
+
+
+// filter news by distance away
+// (For this example to work you need to add a field to the news structure 
+// that uses latlon as its velocity variable name.
+// it can be a text field with a value of ""42.648899,-71.165497)
+{
+    "query": {
+        "filtered": {
+            "query": {
+                "match_all": {}
+            },
+            "filter": {
+                "geo_distance": {
+                    "distance": "20km",
+                    "news.latlon": {
+                        "lat": 37.776,
+                        "lon": -122.41
+                    }
+                }
+            }
+        }
+    }
+}
+
+
+// filter news by distance away part 2
+// (For this example to work you need to add a field to the news structure 
+// that uses latlon as its velocity variable name.
+// it can be a text field with a value of ""42.648899,-71.165497)
+{
+    "query": {
+        "filtered": {
+            "query": {
+                "match_all": {}
+            },
+            "filter": {
+                "geo_distance": {
+                    "distance": "20km",
+                    "news.latlon": {
+                        "lat": 42.648899,
+                        "lon": -71.165497
+                    }
+                }
+            }
+        }
+    }
+}
+
+
+// sort news by distance away
+// (For this example to work you need to add a field to the news structure 
+// that uses latlon as its velocity variable name.
+// it can be a text field with a value of ""42.648899,-71.165497)
+{
+    "sort" : [
+        {
+            "_geo_distance" : {
+                "news.latlon" : {
+                    "lat" : 42,
+                    "lon" : -71
+                },
+                "order" : "asc",
+                "unit" : "km"
+            }
+        }
+    ],
+    "query" : {
+        "term" : { "title" : "gas" }
+    }
+}
+
+
+
+
+// query using a range
+{
+    "query": {
+        "bool": {
+            "must": {
+                "term": {
+                    "title": "gas"
+                }
+            },
+            "must_not": {
+                "range": {
+                    "languageid": {
+                        "from": 2,
+                        "to": 20
+                    }
+                }
+            }
+        }
+    }
+}
 ```
