@@ -80,8 +80,6 @@ curl -XGET http://localhost:8080/api/es/raw -d '
 '
 ```
 
-
-
 ## Queries (use the portlet to see results)
 Match All
 ```
@@ -117,8 +115,6 @@ Facet on the news.tags field
 }
 ```
 
-
-
 Suggest based on title
 ```
 {
@@ -134,9 +130,33 @@ Suggest based on title
 }
 ```
 
+Query using a range
+```
+{
+    "query": {
+        "bool": {
+            "must": {
+                "term": {
+                    "title": "gas"
+                }
+            },
+            "must_not": {
+                "range": {
+                    "languageid": {
+                        "from": 2,
+                        "to": 20
+                    }
+                }
+            }
+        }
+    }
+}
+```
 
 
+## Geolocation
 filter news by distance away
+
 (For this example to work you need to add a field to the news structure 
 that uses latlon as its velocity variable name.
 it can be a text field with a value of ""42.648899,-71.165497)
@@ -210,27 +230,3 @@ it can be a text field with a value of ""42.648899,-71.165497)
 }
 ```
 
-
-
-Query using a range
-```
-{
-    "query": {
-        "bool": {
-            "must": {
-                "term": {
-                    "title": "gas"
-                }
-            },
-            "must_not": {
-                "range": {
-                    "languageid": {
-                        "from": 2,
-                        "to": 20
-                    }
-                }
-            }
-        }
-    }
-}
-```
