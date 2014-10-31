@@ -4,7 +4,7 @@ In order to use geolocation, you will need to add a field to the content you wan
 
 Once this plugin is installed, you can add the portlet to a layout and try elasticsearch queries against the dotCMS content store.  
 
-Viewtool:
+## Viewtool:
 ```
 #set($results = $estool.search('{
     "query": {
@@ -35,9 +35,10 @@ $results.response<br>
 
 ```
 
-RESTful
+## RESTful
+
+Curl for  results
 ```
-// curl for   results
 curl -XGET http://localhost:8080/api/es/search -d '{
     "query": {
         "bool": {
@@ -49,8 +50,9 @@ curl -XGET http://localhost:8080/api/es/search -d '{
         }
     }
 }'
-
-// curl for facets
+```
+curl for facets (raw endpoint gives you the the raw SearchResponse from ElasticSearch
+```
 curl -XGET http://localhost:8080/api/es/raw -d '
 	{
 	    "query" : { "query_string" : {"query" : "gas*"} },
@@ -59,9 +61,10 @@ curl -XGET http://localhost:8080/api/es/raw -d '
 	    }
 	}
 '
+```
 
-
-// curl for suggestions (Did you mean?)
+curl for suggestions (Did you mean?)
+```
 curl -XGET http://localhost:8080/api/es/raw -d '
 	{
 	  "suggest" : {
@@ -75,29 +78,22 @@ curl -XGET http://localhost:8080/api/es/raw -d '
 	  }
 	}
 '
-
 ```
 
 
 
-
-
-
-
-
-
-Queries (use the portlet to get results)
-
+## Queries (use the portlet to see results)
+Match All
 ```
-//Match All
 {
     "query" : {
         "match_all" : {}
     }
 }
+```
 
-
-// Match gas
+Match "gas"
+```
 {
     "query": {
         "bool": {
@@ -109,24 +105,22 @@ Queries (use the portlet to get results)
         }
     }
 }
+```
 
-
-// facet on the news.tags field
+Facet on the news.tags field
+```
 {
     "query" : { "query_string" : {"query" : "gas*"} },
     "facets" : {
         "tags" : { "terms" : {"field" : "news.tags"} }
     }
 }
+```
 
 
 
-
-
-
-
-
-// suggest based on title
+Suggest based on title
+```
 {
   "suggest" : {
     "title-suggestions" : {
@@ -138,14 +132,15 @@ Queries (use the portlet to get results)
     }
   }
 }
+```
 
 
 
-
-// filter news by distance away
-// (For this example to work you need to add a field to the news structure 
-// that uses latlon as its velocity variable name.
-// it can be a text field with a value of ""42.648899,-71.165497)
+filter news by distance away
+(For this example to work you need to add a field to the news structure 
+that uses latlon as its velocity variable name.
+it can be a text field with a value of ""42.648899,-71.165497)
+```
 {
     "query": {
         "filtered": {
@@ -164,12 +159,13 @@ Queries (use the portlet to get results)
         }
     }
 }
-
+```
 
 // filter news by distance away part 2
 // (For this example to work you need to add a field to the news structure 
 // that uses latlon as its velocity variable name.
 // it can be a text field with a value of ""42.648899,-71.165497)
+```
 {
     "query": {
         "filtered": {
@@ -188,12 +184,13 @@ Queries (use the portlet to get results)
         }
     }
 }
-
+```
 
 // sort news by distance away
 // (For this example to work you need to add a field to the news structure 
 // that uses latlon as its velocity variable name.
 // it can be a text field with a value of ""42.648899,-71.165497)
+```
 {
     "sort" : [
         {
@@ -211,11 +208,12 @@ Queries (use the portlet to get results)
         "term" : { "title" : "gas" }
     }
 }
+```
 
 
 
-
-// query using a range
+Query using a range
+```
 {
     "query": {
         "bool": {
