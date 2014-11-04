@@ -23,7 +23,7 @@ dependencies {
 
 jar {
     manifest {
-        name = 'newContent Rest Endpoint'
+        name = 'ElasticSearch dotCMS Plugin'
         instruction 'Bundle-Vendor', 'dotcms'
         instruction 'Bundle-Name', 'dotcms-elasticsearch-plugin'
         instruction 'Bundle-Description', 'ESSearch Rest/viewtool/portlet'
@@ -31,6 +31,7 @@ jar {
         instruction 'Bundle-Activator', 'com.dotcms.plugin.es.osgi.Activator'        
         instruction 'DynamicImport-Package', '*'
         instruction 'Import-Package', '*;version=0'
+        instruction 'Override-Classes', 'com.dotcms.plugin.es.elasticsearch.ESSearchResults,com.dotcms.plugin.es.elasticsearch.ESContentSearch'
     }
 }
 

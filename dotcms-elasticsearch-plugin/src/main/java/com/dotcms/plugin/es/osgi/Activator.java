@@ -42,7 +42,7 @@ public class Activator extends GenericBundleActivator {
 		
 		String jarFile = context.getBundle().getLocation();
 
-		
+        publishBundleServices( context );
 		
 		// Register REST
 		Logger.info(this.getClass(), "Adding new Restful Service:" + clazz.getSimpleName());
@@ -103,8 +103,8 @@ public class Activator extends GenericBundleActivator {
 		Logger.info(this.getClass(), "Removing new Restful Service:" + clazz.getSimpleName());
 		RestServiceUtil.removeResource(clazz);
 		Logger.info(this.getClass(), "Removing new ViewTool:" + EsContentToolInfo.class.getClass().getSimpleName());
-		unregisterViewToolServices();
-		unregisterPortlets();
+
+		unregisterServices (  context );
 		DotConnect db = new DotConnect();
 		db.setSQL("delete from cms_layouts_portlets where portlet_id = 'ES_SEARCH_PORTLET'");
 		db.getResult();
