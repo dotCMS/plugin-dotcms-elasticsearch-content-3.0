@@ -181,10 +181,10 @@ it can be a text field with a value of ""42.648899,-71.165497)
 }
 ```
 
-// filter news by distance away part 2
-// (For this example to work you need to add a field to the news structure 
-// that uses latlon as its velocity variable name.
-// it can be a text field with a value of ""42.648899,-71.165497)
+filter news by distance away part 2
+(For this example to work you need to add a field to the news structure 
+that uses latlon as its velocity variable name.
+it can be a text field with a value of ""42.648899,-71.165497)
 ```
 {
     "query": {
@@ -206,10 +206,10 @@ it can be a text field with a value of ""42.648899,-71.165497)
 }
 ```
 
-// sort news by distance away
-// (For this example to work you need to add a field to the news structure 
-// that uses latlon as its velocity variable name.
-// it can be a text field with a value of ""42.648899,-71.165497)
+sort news by distance away
+(For this example to work you need to add a field to the news structure 
+that uses latlon as its velocity variable name.
+it can be a text field with a value of ""42.648899,-71.165497)
 ```
 {
     "sort" : [
