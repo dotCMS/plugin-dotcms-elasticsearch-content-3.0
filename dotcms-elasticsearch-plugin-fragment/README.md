@@ -2,10 +2,10 @@
 README
 ------
 
-This fragment exports 3rd party libraries needed by this plugin
+This fragment exports 3rd party libraries needed by this plugin.  In this fragment directory
 
 run 
-
+```
 ant
-
-in this directory and copy the resulting .jar (in the ./build folder) to your dotcms install. 
+```
+and copy or upload the resulting .jar (in the ./build folder) to your dotcms OSGi install. 
