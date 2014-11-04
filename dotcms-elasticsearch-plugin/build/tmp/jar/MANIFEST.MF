@@ -1,0 +1,52 @@
+Manifest-Version: 1.0
+Export-Package: com.dotcms.plugin.es.elasticsearch;version="0.1";uses:
+ ="com.dotcms.content.elasticsearch.business,com.dotcms.repackage.org.
+ elasticsearch.action.search,com.dotcms.repackage.org.elasticsearch.se
+ arch,com.dotcms.repackage.org.elasticsearch.search.facet,com.dotcms.r
+ epackage.org.elasticsearch.search.suggest,com.dotmarketing.exception,
+ com.liferay.portal.model",com.dotcms.plugin.es.osgi;version="0.1";use
+ s:="com.dotcms.repackage.org.osgi.framework,com.dotmarketing.osgi",co
+ m.dotcms.plugin.es.rest;version="0.1";uses:="com.dotcms.repackage.jav
+ ax.ws.rs,com.dotcms.repackage.javax.ws.rs.core,com.dotcms.rest,javax.
+ servlet.http",com.dotcms.plugin.es.viewtool;version="0.1";uses:="com.
+ dotcms.plugin.es.elasticsearch,com.dotcms.repackage.org.elasticsearch
+ .action.search,com.dotmarketing.exception,org.apache.velocity.tools.v
+ iew.servlet,org.apache.velocity.tools.view.tools"
+Tool: Bnd-2.1.0.20130426-122213
+Bundle-Name: newContent Rest Endpoint,dotcms-elasticsearch-plugin
+Created-By: 1.7.0_45 (Oracle Corporation)
+DynamicImport-Package: *
+Bundle-Vendor: dotcms
+Bundle-Version: 0.1
+Bnd-LastModified: 1415036349000
+Bundle-ManifestVersion: 2
+Bundle-Activator: com.dotcms.plugin.es.osgi.Activator
+Bundle-Description: ESSearch Rest/viewtool/portlet
+Bundle-SymbolicName: dotcms-elasticsearch-plugin
+Import-Package: com.dotcms.content.elasticsearch.business;version=0,co
+ m.dotcms.content.elasticsearch.util;version=0,com.dotcms.repackage.ja
+ vax.ws.rs;version=0,com.dotcms.repackage.javax.ws.rs.core;version=0,c
+ om.dotcms.repackage.org.apache.commons.io;version=0,com.dotcms.repack
+ age.org.codehaus.jackson.map;version=0,com.dotcms.repackage.org.codeh
+ aus.jettison.json;version=0,com.dotcms.repackage.org.elasticsearch.ac
+ tion;version=0,com.dotcms.repackage.org.elasticsearch.action.search;v
+ ersion=0,com.dotcms.repackage.org.elasticsearch.client;version=0,com.
+ dotcms.repackage.org.elasticsearch.index.query;version=0,com.dotcms.r
+ epackage.org.elasticsearch.search;version=0,com.dotcms.repackage.org.
+ elasticsearch.search.facet;version=0,com.dotcms.repackage.org.elastic
+ search.search.suggest;version=0,com.dotcms.repackage.org.osgi.framewo
+ rk;version=0,com.dotcms.rest;version=0,com.dotcms.rest.config;version
+ =0,com.dotmarketing.beans;version=0,com.dotmarketing.business;version
+ =0,com.dotmarketing.business.web;version=0,com.dotmarketing.cache;ver
+ sion=0,com.dotmarketing.common.db;version=0,com.dotmarketing.common.m
+ odel;version=0,com.dotmarketing.exception;version=0,com.dotmarketing.
+ osgi;version=0,com.dotmarketing.portlets.contentlet.model;version=0,c
+ om.dotmarketing.portlets.structure.model;version=0,com.dotmarketing.u
+ til;version=0,com.dotmarketing.viewtools.content;version=0,com.lifera
+ y.portal.model;version=0,javax.servlet;version=0,javax.servlet.http;v
+ ersion=0,org.apache.velocity.context;version=0,org.apache.velocity.to
+ ols.view;version=0,org.apache.velocity.tools.view.context;version=0,o
+ rg.apache.velocity.tools.view.servlet;version=0,org.apache.velocity.t
+ ools.view.tools;version=0
+Bundle-DocURL: http://www.dotcms.com
+
