@@ -1,6 +1,6 @@
 This plugin for dotCMS 3.0 exposes native elasticsearch content queries via a viewtool, a java api, a portlet and as a restful service.  It allows you access to geolocation queries, facets, suggestions ("Did you mean?" and other OTB functionality.
 
-In order to use geolocation, you will need to add a field to the content you want to query with the velocity var name "latlon".
+In order to use geolocation, you will need to add a text field to the content you want to query with the velocity var name "latlon".  You should do a full reindex after adding the field.
 
 Once this plugin is installed, you can add the portlet to a layout and try elasticsearch queries against the dotCMS content store.  
 
